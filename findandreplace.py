@@ -2,6 +2,7 @@ import pywikibot
 from tqdm import tqdm
 import time
 
+
 def find_and_replace(site, page_title, mappings):
     try:
         page = pywikibot.Page(site, page_title)
@@ -17,20 +18,19 @@ def find_and_replace(site, page_title, mappings):
 
         if text != original_text:
             page.text = text
-            page.save(summary="Automated linking update", minor=True)
-            time.sleep(10)
-        else:
-            print(f"No changes made to {page_title}.")
+            page.save(summary="Fix file usage.", minor=True, tags="bot")
+            time.sleep(6)
 
     except Exception as e:
         print(f"An error occurred while processing {page_title}: {e}")
+
 
 def main():
     site = pywikibot.Site()
     site.login()
 
     mappings = {
-        'find': 'replace',
+        "File:REPLACED.png": "File:REPLACER.png",
     }
 
     try:
